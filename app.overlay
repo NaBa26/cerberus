@@ -1,43 +1,44 @@
 / {
-    chosen {
-        zephyr,code-partition = &slot0_partition;
-    };
+	chosen {
+		/* Tells Zephyr to boot your application from Slot 0 */
+		zephyr,code-partition = &slot0_partition;
+	};
 };
 
 &flash0 {
-    partitions {
-        compatible = "fixed-partitions";
-        #address-cells = <1>;
-        #size-cells = <1>;
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
 
-        /* Sectors 0-3: 16KB each = 64KB total for MCUboot */
-        boot_partition: partition@0 {
-            label = "mcuboot";
-            reg = <0x00000000 0x00010000>;
-        };
+		/* Sectors 0, 1, 2, 3 (16KB each = 64KB Total) */
+		boot_partition: partition@0 {
+			label = "mcuboot";
+			reg = <0x00000000 0x00010000>;
+		};
 
-        /* Sector 4: 64KB. Unused by bootloader, kept for app data/NVM */
-        storage_partition: partition@10000 {
-            label = "storage";
-            reg = <0x00010000 0x00010000>;
-        };
+		/* Sector 4 (64KB Total) */
+		scratch_partition: partition@10000 {
+			label = "image-scratch";
+			reg = <0x00010000 0x00010000>;
+		};
 
-        /* Sector 5: 128KB for Active Application */
-        slot0_partition: partition@20000 {
-            label = "image-0";
-            reg = <0x00020000 0x00020000>;
-        };
+		/* Sector 5 (128KB Total) */
+		slot0_partition: partition@20000 {
+			label = "image-0";
+			reg = <0x00020000 0x00020000>;
+		};
 
-        /* Sector 6: 128KB for Downloaded Application Update */
-        slot1_partition: partition@40000 {
-            label = "image-1";
-            reg = <0x00040000 0x00020000>;
-        };
+		/* Sector 6 (128KB Total) */
+		slot1_partition: partition@40000 {
+			label = "image-1";
+			reg = <0x00040000 0x00020000>;
+		};
 
-        /* Sector 7: 128KB for Image Swapping/Tearing Recovery */
-        scratch_partition: partition@60000 {
-            label = "image-scratch";
-            reg = <0x00060000 0x00020000>;
-        };
-    };
+		/* Sector 7 (128KB Total) */
+		storage_partition: partition@60000 {
+			label = "storage";
+			reg = <0x00060000 0x00020000>;
+		};
+	};
 };
