@@ -1,2 +1,8 @@
 # keys
 keys/
+
+# ide specific files
+.vscode/
+
+# build
+build/
