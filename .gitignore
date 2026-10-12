@@ -3,6 +3,10 @@ keys/
 
 # ide specific files
 .vscode/
+.idea/
 
 # build
 build/
+
+#Kconfig
+/Kconfig
